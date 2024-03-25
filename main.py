@@ -14,7 +14,7 @@ def group_odds(values, group_size=2):
 def handle_click_and_scrape(driver, element):
     main_window = driver.current_window_handle
     element.click()  # Click the button to open a new window/tab
-    time.sleep(2)  # Adjust as necessary
+    time.sleep(10)  # Adjust as necessary
     # Switch to the new window/tab
     new_window = [window for window in driver.window_handles if window != main_window][0]
     driver.switch_to.window(new_window)
@@ -27,7 +27,8 @@ def handle_click_and_scrape(driver, element):
     for element in wrap:
         odds_values.append(float(element.get_text()))
 
-    grouped_odds = group_odds(odds_values)        
+    grouped_odds = group_odds(odds_values)
+    print(grouped_odds) 
     
     # Close the new window and switch back
     driver.close()
@@ -39,7 +40,7 @@ def main():
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
     driver.get('https://www.sportybet.com/int/sport/football')
-    time.sleep(2)
+    time.sleep(10)
     # Locate the buttons you want to click
     buttons = driver.find_elements(By.CLASS_NAME, "m-table-cell market-size")  # Adjust your selector
     
@@ -53,6 +54,7 @@ def main():
     for thread in threads:
         thread.join()  # Wait for all threads to complete
     
+    time.sleep(10)
     driver.quit()
 
 if __name__ == "__main__":
